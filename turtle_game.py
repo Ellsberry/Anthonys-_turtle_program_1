@@ -92,7 +92,7 @@ def play_sound(sound_file):
 
 
 while enemy_go:
-    print(f"x = {x} y = {y}")
+    #print(f"x = {x} y = {y}")
     enemy_distance = random.randint(20, 100)
     RightOrLeft = random.randint(1, 2)
     rotate = random.randint(1, 180)
