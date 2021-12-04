@@ -1,5 +1,5 @@
 from turtle import Screen
-from turtle import Turtle as nt
+# from turtle import Turtle as nt
 import turtle as t
 import random
 from sys import exit
@@ -60,7 +60,7 @@ wn.onkeypress(down, "Down")
 wn.onkeypress(left, "Left")
 wn.onkeypress(right, "Right")
 
-
+"""
 for mom_using_the_wheelbarrow_outside in range(number_of_enemies):
     enemies.append(nt())
 
@@ -74,6 +74,24 @@ for enemy in enemies:
     ex = random.randint(-300, 300)
     ey = random.randint(-150, 150)
     enemy.setposition(ex, ey)
+"""
+
+# Anthony creates a new loop.
+for index in range(number_of_enemies):
+    enemies.append(t.Turtle())
+    enemies[index].shape("turtle")
+    if index == 1:
+        enemies[index].color("blue")
+    elif index == 2:
+        enemies[index].color("yellow")
+    else:
+        enemies[index].color("violet")
+
+    enemies[index].penup()
+    ex = random.randint(-300, 300)
+    ey = random.randint(-150, 150)
+    enemies[index].setposition(ex, ey)
+
 
 enemy_go = True
 
@@ -92,25 +110,26 @@ def play_sound(sound_file):
 
 
 while enemy_go:
-    #print(f"x = {x} y = {y}")
-    enemy_distance = random.randint(20, 100)
-    RightOrLeft = random.randint(1, 2)
-    rotate = random.randint(1, 180)
-    ey = int(enemy.ycor())
-    ex = int(enemy.xcor())
-    if RightOrLeft == 1:
-        enemy.right(rotate)
-    else:
-        enemy.left(rotate)
-    enemy.forward(enemy_distance)
-    if enemy.xcor() > 600:
-        enemy.forward(-enemy_distance)
-    elif enemy.xcor() < -600:
-        enemy.forward(-enemy_distance)
-    elif enemy.ycor() > 300:
-        enemy.forward(-enemy_distance)
-    elif enemy.ycor() < -300:
-        enemy.forward(-enemy_distance)
-    if is_collision(enemy, t):
-        play_sound('EXPLODE.WAV')
-        exit()
+    # print(f"x = {x} y = {y}")
+    for enemy in enemies:
+        rotate = random.randint(1, 180)
+        RightOrLeft = random.randint(1, 2)
+        enemy_distance = random.randint(20, 100)
+        ey = int(enemy.ycor())
+        ex = int(enemy.xcor())
+        if RightOrLeft == 1:
+            enemy.right(rotate)
+        else:
+            enemy.left(rotate)
+        enemy.forward(enemy_distance)
+        if enemy.xcor() > 600:
+            enemy.forward(-enemy_distance)
+        elif enemy.xcor() < -600:
+            enemy.forward(-enemy_distance)
+        elif enemy.ycor() > 300:
+            enemy.forward(-enemy_distance)
+        elif enemy.ycor() < -300:
+            enemy.forward(-enemy_distance)
+        if is_collision(enemy, t):
+            play_sound('EXPLODE.WAV')
+            exit()
