@@ -16,6 +16,34 @@ y = int(t.ycor())
 # print(f"x = {x} y = {y}")
 number_of_enemies = 4
 enemies = []
+# create the player's bullet
+bullet = t.Turtle()
+bullet.color("yellow")
+bullet.shape('triangle')
+bullet.penup()
+bullet.speed(0)
+bullet.setheading(90)
+bullet.shapesize(0.5,0.5)
+bullet.hideturtle()
+
+bulletspeed = 20
+
+# bullet state {ready = ready to fire & fire = bullet is firing
+bulletstate = "ready"
+
+
+def fire_bullet():
+    # declare bulletsate as a global variable
+    global bulletstate
+    if bulletstate == 'ready':
+        play_sound("LASER.WAV")
+        bulletstate = 'fire'
+        # move the bullet above the player
+        x = t.xcor()
+        y = t.ycor() +10
+        bullet.setposition(x, y)
+        bullet. showturtle()
+
 
 
 def left():
@@ -59,6 +87,7 @@ wn.onkeypress(up, "Up")
 wn.onkeypress(down, "Down")
 wn.onkeypress(left, "Left")
 wn.onkeypress(right, "Right")
+wn.onkeypress(fire_bullet, "space")
 
 """
 for mom_using_the_wheelbarrow_outside in range(number_of_enemies):
