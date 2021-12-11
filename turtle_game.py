@@ -1,11 +1,38 @@
 from turtle import Screen
-# from turtle import Turtle as nt
+from turtle import Turtle as T
 import turtle as t
 import random
 from sys import exit
 import math
 import winsound
+
+# set up screen
+# tutorial uses wn (short for window) for screen
 wn = Screen()
+wn.bgcolor("black")
+wn.title("Turtle Wars")
+
+# set the score to zero
+score = 0
+score_pen = t.Turtle()
+score_pen.speed(0)
+score_pen.color('White')
+score_pen.penup()
+score_pen.setposition(-290, 280)
+scorestring = "Score: {}".format(score)
+score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
+score_pen.hideturtle()
+
+# create the player's bullet
+bullet = t.Turtle()
+bullet.color("yellow")
+bullet.shape('triangle')
+bullet.penup()
+bullet.speed(0)
+bullet.setheading(90)
+bullet.shapesize(0.5, 0.5)
+bullet.hideturtle()
+
 t.shape("turtle")
 t.color("green")
 t.pencolor("black")
@@ -14,19 +41,11 @@ t.penup()
 x = int(t.xcor())
 y = int(t.ycor())
 # print(f"x = {x} y = {y}")
-number_of_enemies = 4
+number_of_enemies = 5
 enemies = []
-# create the player's bullet
-bullet = t.Turtle()
-bullet.color("yellow")
-bullet.shape('triangle')
-bullet.penup()
-bullet.speed(0)
-bullet.setheading(90)
-bullet.shapesize(0.5,0.5)
-bullet.hideturtle()
+turtle_direction = 0
 
-bulletspeed = 20
+bulletspeed = 60
 
 # bullet state {ready = ready to fire & fire = bullet is firing
 bulletstate = "ready"
@@ -35,15 +54,16 @@ bulletstate = "ready"
 def fire_bullet():
     # declare bulletsate as a global variable
     global bulletstate
+    global heading_set
     if bulletstate == 'ready':
+        heading_set = True
         play_sound("LASER.WAV")
         bulletstate = 'fire'
         # move the bullet above the player
         x = t.xcor()
-        y = t.ycor() +10
+        y = t.ycor() + 10
         bullet.setposition(x, y)
-        bullet. showturtle()
-
+        bullet.showturtle()
 
 
 def left():
@@ -82,13 +102,26 @@ def down():
     t.goto(x, y)
 
 
+def rotate_clockwise():
+    global turtle_direction
+    t.right(90)
+    turtle_direction += 90
+
+
+def rotate_counter_clockwise():
+    global turtle_direction
+    t.left(90)
+    turtle_direction -= 90
+
+
 wn.listen()
 wn.onkeypress(up, "Up")
 wn.onkeypress(down, "Down")
 wn.onkeypress(left, "Left")
 wn.onkeypress(right, "Right")
 wn.onkeypress(fire_bullet, "space")
-
+wn.onkeypress(rotate_clockwise, "r")
+wn.onkeypress(rotate_counter_clockwise, "l")
 """
 for mom_using_the_wheelbarrow_outside in range(number_of_enemies):
     enemies.append(nt())
@@ -139,7 +172,20 @@ def play_sound(sound_file):
 
 
 while enemy_go:
+    global heading_set
     # print(f"x = {x} y = {y}")
+    # Move the bullet
+    if bulletstate == "fire":
+        if heading_set:
+            heading = t.heading()
+            bullet.setheading(heading)
+            heading_set = False
+        bullet.forward(bulletspeed)
+        by = bullet.ycor()
+        bx = bullet.xcor()
+        if by >= 300 or by <= -300 or bx >= 600 or bx <= -600:
+            bulletstate = "ready"
+            bullet.hideturtle()
     for enemy in enemies:
         rotate = random.randint(1, 180)
         RightOrLeft = random.randint(1, 2)
