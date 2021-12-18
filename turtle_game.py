@@ -33,13 +33,22 @@ bullet.setheading(90)
 bullet.shapesize(0.5, 0.5)
 bullet.hideturtle()
 
+# Create player
+player = t.Turtle()
+player.shape("turtle")
+player.color("green")
+player.penup()
+
+"""
 t.shape("turtle")
 t.color("green")
 # t.pencolor("black")
-t.setup(600, 300)
 t.penup()
-x = int(t.xcor())
-y = int(t.ycor())
+"""
+
+t.setup(600, 300)
+x = int(player.xcor())
+y = int(player.ycor())
 # print(f"x = {x} y = {y}")
 number_of_enemies = 5
 enemies = []
@@ -61,10 +70,10 @@ def fire_bullet():
         play_sound("LASER.WAV")
         bulletstate = 'fire'
         # move the bullet above the player
-        x = t.xcor()
-        y = t.ycor()
-        bullet.setposition(x, y)
-        bullet.heading(heading)
+        bpx = player.xcor()
+        bpy = player.ycor()
+        bullet.setposition(bpx, bpy)
+        # bullet.setheading(heading)
         bullet.showturtle()
 
 
@@ -74,7 +83,7 @@ def left():
     x -= 20
     if x < -600:
         x = -600
-    t.goto(x, y)
+    player.goto(x, y)
 
 
 def right():
@@ -83,7 +92,7 @@ def right():
     x += 20
     if x > 600:
         x = 600
-    t.goto(x, y)
+    player.goto(x, y)
 
 
 def up():
@@ -92,7 +101,7 @@ def up():
     y += 20
     if y > 300:
         y = 300
-    t.goto(x, y)
+    player.goto(x, y)
 
 
 def down():
@@ -101,18 +110,18 @@ def down():
     y -= 20
     if y < -300:
         y = -300
-    t.goto(x, y)
+    player.goto(x, y)
 
 
 def rotate_clockwise():
     global turtle_direction
-    t.right(90)
+    player.right(90)
     turtle_direction += 90
 
 
 def rotate_counter_clockwise():
     global turtle_direction
-    t.left(90)
+    player.left(90)
     turtle_direction -= 90
 
 
@@ -160,14 +169,14 @@ def play_sound(sound_file):
     winsound.PlaySound(sound_file, winsound.SND_ASYNC)
 
 
-while player_lives >= 0:
+while player_lives > 0:
     global heading_set
     global heading
     # print(f"x = {x} y = {y}")
     # Move the bullet
     if bulletstate == "fire":
         if heading_set:
-            heading = t.heading()
+            heading = player.heading()
             bullet.setheading(heading)
             heading_set = False
         bullet.forward(bulletspeed)
@@ -195,6 +204,6 @@ while player_lives >= 0:
             enemy.forward(-enemy_distance)
         elif enemy.ycor() < -300:
             enemy.forward(-enemy_distance)
-        if is_collision(enemy, t):
+        if is_collision(enemy, player):
             play_sound('EXPLODE.WAV')
             player_lives -= 1
