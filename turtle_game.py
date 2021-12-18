@@ -35,7 +35,7 @@ bullet.hideturtle()
 
 t.shape("turtle")
 t.color("green")
-t.pencolor("black")
+# t.pencolor("black")
 t.setup(600, 300)
 t.penup()
 x = int(t.xcor())
@@ -52,17 +52,19 @@ bulletstate = "ready"
 
 
 def fire_bullet():
-    # declare bulletsate as a global variable
+    # declare bulletstate as a global variable
     global bulletstate
     global heading_set
+    global heading
     if bulletstate == 'ready':
         heading_set = True
         play_sound("LASER.WAV")
         bulletstate = 'fire'
         # move the bullet above the player
         x = t.xcor()
-        y = t.ycor() + 10
+        y = t.ycor()
         bullet.setposition(x, y)
+        bullet.heading(heading)
         bullet.showturtle()
 
 
@@ -122,23 +124,9 @@ wn.onkeypress(right, "Right")
 wn.onkeypress(fire_bullet, "space")
 wn.onkeypress(rotate_clockwise, "r")
 wn.onkeypress(rotate_counter_clockwise, "l")
-"""
-for mom_using_the_wheelbarrow_outside in range(number_of_enemies):
-    enemies.append(nt())
 
-for enemy in enemies:
-    enemy = t.Turtle()
-    enemy.shape("turtle")
-    enemy.color("red")
-    enemy.pencolor("black")
-    enemy.penup()
-    enemy.speed(3)
-    ex = random.randint(-300, 300)
-    ey = random.randint(-150, 150)
-    enemy.setposition(ex, ey)
-"""
 
-# Anthony creates a new loop.
+# Anthony & Steve create a new loop.
 for index in range(number_of_enemies):
     enemies.append(t.Turtle())
     enemies[index].shape("turtle")
@@ -156,6 +144,7 @@ for index in range(number_of_enemies):
 
 
 enemy_go = True
+player_lives = 3
 
 
 def is_collision(t1, t2):
@@ -171,8 +160,9 @@ def play_sound(sound_file):
     winsound.PlaySound(sound_file, winsound.SND_ASYNC)
 
 
-while enemy_go:
+while player_lives >= 0:
     global heading_set
+    global heading
     # print(f"x = {x} y = {y}")
     # Move the bullet
     if bulletstate == "fire":
@@ -207,4 +197,4 @@ while enemy_go:
             enemy.forward(-enemy_distance)
         if is_collision(enemy, t):
             play_sound('EXPLODE.WAV')
-            exit()
+            player_lives -= 1
