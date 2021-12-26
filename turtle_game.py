@@ -53,7 +53,7 @@ y = int(player.ycor())
 number_of_enemies = 5
 enemies = []
 turtle_direction = 0
-
+bullet_path = set()
 bulletspeed = 60
 
 # bullet state {ready = ready to fire & fire = bullet is firing
@@ -179,12 +179,42 @@ while player_lives > 0:
             heading = player.heading()
             bullet.setheading(heading)
             heading_set = False
+        bullet_heading = bullet.heading()
+        bby = bullet.ycor()
+        bbx = bullet.xcor()
         bullet.forward(bulletspeed)
         by = bullet.ycor()
         bx = bullet.xcor()
+        # set_y = range(bby, by)
+        # set_x = range(bbx, bx)
+        bullet_path.clear()
         if by >= 300 or by <= -300 or bx >= 600 or bx <= -600:
             bulletstate = "ready"
             bullet.hideturtle()
+        if bullet_heading == 90:
+            bullet_path.add((int(bbx), int(bby)))
+            for index in range(60):
+                bby += 1
+                bullet_path.add((int(bbx), int(bby)))
+            print(f"bullet_path = {bullet_path}")
+        if bullet_heading == 270:
+            bullet_path.add((int(bbx), int(bby)))
+            for index in range(60):
+                bby -= 1
+                bullet_path.add((int(bbx), int(bby)))
+            print(f"bullet_path = {bullet_path}")
+        if bullet_heading == 180:
+            bullet_path.add((int(bbx), int(bby)))
+            for index in range(60):
+                bbx -= 1
+                bullet_path.add((int(bbx), int(bby)))
+            print(f"bullet_path = {bullet_path}")
+        if bullet_heading == 0:
+            bullet_path.add((int(bbx), int(bby)))
+            for index in range(60):
+                bbx += 1
+                bullet_path.add((int(bbx), int(bby)))
+            print(f"bullet_path = {bullet_path}")
     for enemy in enemies:
         rotate = random.randint(1, 180)
         RightOrLeft = random.randint(1, 2)
@@ -204,6 +234,8 @@ while player_lives > 0:
             enemy.forward(-enemy_distance)
         elif enemy.ycor() < -300:
             enemy.forward(-enemy_distance)
+        if is_collision(bullet, enemy):
+            enemy.hideturtle()
         if is_collision(enemy, player):
             play_sound('EXPLODE.WAV')
             player_lives -= 1
