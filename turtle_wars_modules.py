@@ -3,9 +3,9 @@
 import turtle
 import turtle as t
 from turtle import Screen
-import sys
+# import sys
 import random
-from sys import exit
+# from sys import exit
 import math
 import winsound
 from path import path
@@ -37,7 +37,8 @@ player.penup()
 # Build enemy objects
 # number_of_enemies = int(input("How many enemies do you want?"))
 enemies = []
-number_of_enemies = int(turtle.textinput(enemies, "How many enemies do you want?   "))
+enemy_number = ""
+number_of_enemies = int(turtle.textinput(enemy_number, "How many enemies do you want?   "))
 for index in range(number_of_enemies):
     enemy = t.Turtle()
     enemy.speed(0)
@@ -70,6 +71,7 @@ bullet.setheading(90)
 bullet.shapesize(0.5, 0.5)
 bullet.hideturtle()
 
+
 def play_sound(sound_file):
     winsound.PlaySound(sound_file, winsound.SND_ASYNC)
 
@@ -90,7 +92,7 @@ def right():
     px += 20
     if px > 600:
         px = 600
-    player.goto(px,py)
+    player.goto(px, py)
 
 
 def up():
@@ -118,13 +120,13 @@ def rotate_clockwise():
 def rotate_counter_clockwise():
     player.left(90)
 
+
 def is_collision(t1, t2):
     distance = math.sqrt(math.pow(t1.xcor() - t2.xcor(), 2) + math.pow(t1.ycor() - t2.ycor(), 2))
     if distance < 25:
         return True
     else:
         return False
-y
 
 
 # Event driven movements for Bullet

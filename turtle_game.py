@@ -1,5 +1,5 @@
 from turtle import Screen
-from turtle import Turtle as T
+# from turtle import Turtle
 import turtle as t
 import random
 from sys import exit
