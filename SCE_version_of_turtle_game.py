@@ -134,7 +134,6 @@ wn.onkeypress(fire_bullet, "space")
 wn.onkeypress(rotate_clockwise, "r")
 wn.onkeypress(rotate_counter_clockwise, "l")
 
-
 # Anthony & Steve create a new loop.
 for index in range(number_of_enemies):
     enemies.append(t.Turtle())
@@ -151,14 +150,13 @@ for index in range(number_of_enemies):
     ey = random.randint(-150, 150)
     enemies[index].setposition(ex, ey)
 
-
 enemy_go = True
 player_lives = 3
 
 
 def is_collision(t1, t2):
     # print("t1x= ",t1.xcor(), "t1y = ",t1.ycor(), "t2x = ",t2.xcor(),"t2y = ",t2.ycor())
-    distance = math.sqrt(math.pow(t1.xcor()-t2.xcor(), 2)+math.pow(t1.ycor()-t2.ycor(), 2))
+    distance = math.sqrt(math.pow(t1.xcor() - t2.xcor(), 2) + math.pow(t1.ycor() - t2.ycor(), 2))
     if distance < 25:
         return True
     else:
@@ -215,6 +213,7 @@ while player_lives > 0:
                 bbx += 1
                 bullet_path.add((int(bbx), int(bby)))
             print(f"bullet_path = {bullet_path}")
+
     for enemy in enemies:
         rotate = random.randint(1, 180)
         RightOrLeft = random.randint(1, 2)
