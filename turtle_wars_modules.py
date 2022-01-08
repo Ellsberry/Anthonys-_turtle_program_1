@@ -35,7 +35,7 @@ player.color('white')
 player.speed(0)
 player.penup()
 player_lives = ""
-number_of_player_lives = int(turtle.textinput(player_lives, "How many player lives do you want?   "))
+number_of_player_lives = 3   # int(turtle.textinput(player_lives, "How many player lives do you want?   "))
 
 # Build enemy objects
 # number_of_enemies = int(input("How many enemies do you want?")
@@ -43,7 +43,7 @@ number_of_player_lives = int(turtle.textinput(player_lives, "How many player liv
 points = 1                            # at the beginning of the game an enemy is worth 1 point
 enemies = []
 enemy_number = ""
-number_of_enemies = int(turtle.textinput(enemy_number, "How many enemies do you want?   "))
+number_of_enemies = 5   # int(turtle.textinput(enemy_number, "How many enemies do you want?   "))
 for index in range(number_of_enemies):
     enemy = t.Turtle()
     enemy.speed(0)
@@ -244,6 +244,7 @@ def move_enemy(num_player_lives, b_path, d_score, d_score_points):
         ey2 = int(e_enemy.ycor())
         ex2 = int(e_enemy.xcor())
         enemy_path = path(ex1, ey1, ex2, ey2)
+        # enemy_path = path(-25, -25, -19, -30)
         print("enemy path = ", enemy_path)
         if is_collision(player, e_enemy):
             num_player_lives -= 1
