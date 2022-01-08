@@ -1,5 +1,6 @@
 """This module contains the player, bullet and enemy classes including
         their attributes and methods"""
+import sys
 import turtle
 import turtle as t
 from turtle import Screen
@@ -33,9 +34,13 @@ player.shape("turtle")
 player.color('white')
 player.speed(0)
 player.penup()
+player_lives = ""
+number_of_player_lives = int(turtle.textinput(player_lives, "How many player lives do you want?   "))
 
 # Build enemy objects
-# number_of_enemies = int(input("How many enemies do you want?"))
+# number_of_enemies = int(input("How many enemies do you want?")
+# points is the number of points scored when an enemy is destroyed
+points = 1                            # at the beginning of the game an enemy is worth 1 point
 enemies = []
 enemy_number = ""
 number_of_enemies = int(turtle.textinput(enemy_number, "How many enemies do you want?   "))
@@ -70,6 +75,8 @@ bullet.speed(0)
 bullet.setheading(90)
 bullet.shapesize(0.5, 0.5)
 bullet.hideturtle()
+b_path = set()
+d_score_points = 1
 
 
 def play_sound(sound_file):
@@ -124,6 +131,7 @@ def rotate_counter_clockwise():
 def is_collision(t1, t2):
     distance = math.sqrt(math.pow(t1.xcor() - t2.xcor(), 2) + math.pow(t1.ycor() - t2.ycor(), 2))
     if distance < 25:
+        play_sound('EXPLODE.WAV')
         return True
     else:
         return False
@@ -168,45 +176,85 @@ def fire_bullet():
 
 
 def bullet_move():
-    pass
+    bullet_heading = player.heading()  # ensure the bullet is out of the mouth of the player
+    # establish the bullet's beginning and ending path and save in bullet_path
+    b1x = bullet.xcor()
+    b1y = bullet.ycor()
+    b_heading = int(bullet.heading())
+    bullet.setheading(b_heading)
+    bullet.showturtle()
+    bullet_path = set()
+    if bullet_heading == 90:
+        for index in range(60):
+            b1y += 1
+            bullet_path.add((int(b1x), int(b1y)))
+        print(f"bullet_path = {bullet_path}")
+    if bullet_heading == 270:
+        bullet_path.add((int(b1x), int(b1y)))
+        for index in range(60):
+            b1y -= 1
+            bullet_path.add((int(b1x), int(b1y)))
+        print(f"bullet_path = {bullet_path}")
+    if b_heading == 180:
+        bullet_path.add((int(b1x), int(b1y)))
+        for index in range(60):
+            b1x -= 1
+            bullet_path.add((int(b1x), int(b1y)))
+        print(f"bullet_path = {bullet_path}")
+    if b_heading == 0:
+        bullet_path.add((int(b1x), int(b1y)))
+        for index in range(60):
+            b1x += 1
+            bullet_path.add((int(b1x), int(b1y)))
+        print(f"bullet_path = {bullet_path}")
+    bullet.setposition(b1x, b1y)
 
 
-def bullet_hit_enemy():
+def increase_score(d_score, score_points):
+    """Display an increase score"""
+    d_score = d_score + score_points
+    score_pen.setposition(-290, 280)
+    d_score_string = "Score: {}".format(d_score)
+    score_pen.write(d_score_string, False, align="left", font=("Arial", 14, "normal"))
+    score_pen.hideturtle()
     pass
 
 
 # Movement of Enemy
-def move_enemy():
-    for enemy in enemies:
+def move_enemy(num_player_lives, b_path, d_score, d_score_points):
+    for e_enemy in enemies:
         rotate = random.randint(1, 180)
         right_or_left = random.randint(1, 2)
         enemy_distance = random.randint(20, 100)
-        ey1 = int(enemy.ycor())
-        ex1 = int(enemy.xcor())
+        ey1 = int(e_enemy.ycor())
+        ex1 = int(e_enemy.xcor())
         if right_or_left == 1:
-            enemy.right(rotate)
+            e_enemy.right(rotate)
         else:
-            enemy.left(rotate)
-        enemy.forward(enemy_distance)
-        if enemy.xcor() > 600:
-            enemy.forward(-enemy_distance)
-        elif enemy.xcor() < -600:
-            enemy.forward(-enemy_distance)
-        elif enemy.ycor() > 300:
-            enemy.forward(-enemy_distance)
-        elif enemy.ycor() < -300:
-            enemy.forward(-enemy_distance)
-        ey2 = int(enemy.ycor())
-        ex2 = int(enemy.xcor())
+            e_enemy.left(rotate)
+        e_enemy.forward(enemy_distance)
+        if e_enemy.xcor() > 600:
+            e_enemy.forward(-enemy_distance)
+        elif e_enemy.xcor() < -600:
+            e_enemy.forward(-enemy_distance)
+        elif e_enemy.ycor() > 300:
+            e_enemy.forward(-enemy_distance)
+        elif e_enemy.ycor() < -300:
+            e_enemy.forward(-enemy_distance)
+        ey2 = int(e_enemy.ycor())
+        ex2 = int(e_enemy.xcor())
         enemy_path = path(ex1, ey1, ex2, ey2)
-        print(enemy_path)
-        if is_collision(bullet, enemy):
-            enemy.hideturtle()
-
-
-
-
-
+        print("enemy path = ", enemy_path)
+        if is_collision(player, e_enemy):
+            num_player_lives -= 1
+            if num_player_lives <= 0:
+                sys.exit()
+            continue
+        if len(enemy_path.intersection(b_path)) > 0:
+            e_enemy.hideturtle()
+            play_sound('EXPLODE.WAV')
+            increase_score(d_score, d_score_points)
+    return num_player_lives
 
 
 
@@ -220,4 +268,8 @@ wn.onkeypress(right, "Right")
 wn.onkeypress(fire_bullet, "space")
 wn.onkeypress(rotate_clockwise, "r")
 wn.onkeypress(rotate_counter_clockwise, "l")
+
+while True:
+    number_of_player_lives = move_enemy(number_of_player_lives, b_path, score, d_score_points)
+
 wn.mainloop()
