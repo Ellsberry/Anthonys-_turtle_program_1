@@ -77,6 +77,7 @@ bullet.shapesize(0.5, 0.5)
 bullet.hideturtle()
 b_path = set()
 d_score_points = 1
+x_score = 0
 
 
 def play_sound(sound_file):
@@ -212,22 +213,25 @@ def bullet_move():
 
 def increase_score(d_score, score_points):
     """Display an increase score"""
+    score_pen.clear()
     d_score = d_score + score_points
     score_pen.setposition(-290, 280)
     d_score_string = "Score: {}".format(d_score)
     score_pen.write(d_score_string, False, align="left", font=("Arial", 14, "normal"))
     score_pen.hideturtle()
-    pass
-
+    return d_score
+# 0 + 1 = 1
 
 # Movement of Enemy
 def move_enemy(num_player_lives, b_path, d_score, d_score_points):
+    x_score = 0
     for e_enemy in enemies:
         rotate = random.randint(1, 180)
         right_or_left = random.randint(1, 2)
         enemy_distance = random.randint(20, 100)
         ey1 = int(e_enemy.ycor())
         ex1 = int(e_enemy.xcor())
+        e_enemy.speed(9)                               # This is where we change the speed of the enemy turtles.
         if right_or_left == 1:
             e_enemy.right(rotate)
         else:
@@ -251,12 +255,12 @@ def move_enemy(num_player_lives, b_path, d_score, d_score_points):
             if num_player_lives <= 0:
                 sys.exit()
             continue
-        if len(enemy_path.intersection(b_path)) > 0:
+        if len(enemy_path.intersection(b_path)) == 0:
             e_enemy.hideturtle()
             play_sound('EXPLODE.WAV')
-            increase_score(d_score, d_score_points)
-    return num_player_lives
-
+            score = increase_score(x_score, points)
+            x_score += 1
+    return num_player_lives, x_score
 
 
 # The remainder of the program is event driven based on keyboard inputs
