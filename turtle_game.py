@@ -33,22 +33,13 @@ bullet.setheading(90)
 bullet.shapesize(0.5, 0.5)
 bullet.hideturtle()
 
-# Create player
-player = t.Turtle()
-player.shape("turtle")
-player.color("green")
-player.penup()
-
-"""
 t.shape("turtle")
 t.color("green")
-# t.pencolor("black")
-t.penup()
-"""
-
+t.pencolor("black")
 t.setup(600, 300)
-x = int(player.xcor())
-y = int(player.ycor())
+t.penup()
+x = int(t.xcor())
+y = int(t.ycor())
 # print(f"x = {x} y = {y}")
 number_of_enemies = 5
 enemies = []
@@ -61,19 +52,17 @@ bulletstate = "ready"
 
 
 def fire_bullet():
-    # declare bulletstate as a global variable
+    # declare bulletsate as a global variable
     global bulletstate
     global heading_set
-    global heading
     if bulletstate == 'ready':
         heading_set = True
         play_sound("LASER.WAV")
         bulletstate = 'fire'
         # move the bullet above the player
-        bpx = player.xcor()
-        bpy = player.ycor()
-        bullet.setposition(bpx, bpy)
-        # bullet.setheading(heading)
+        x = t.xcor()
+        y = t.ycor() + 10
+        bullet.setposition(x, y)
         bullet.showturtle()
 
 
@@ -83,7 +72,7 @@ def left():
     x -= 20
     if x < -600:
         x = -600
-    player.goto(x, y)
+    t.goto(x, y)
 
 
 def right():
@@ -92,7 +81,7 @@ def right():
     x += 20
     if x > 600:
         x = 600
-    player.goto(x, y)
+    t.goto(x, y)
 
 
 def up():
@@ -101,7 +90,7 @@ def up():
     y += 20
     if y > 300:
         y = 300
-    player.goto(x, y)
+    t.goto(x, y)
 
 
 def down():
@@ -110,18 +99,18 @@ def down():
     y -= 20
     if y < -300:
         y = -300
-    player.goto(x, y)
+    t.goto(x, y)
 
 
 def rotate_clockwise():
     global turtle_direction
-    player.right(90)
+    t.right(90)
     turtle_direction += 90
 
 
 def rotate_counter_clockwise():
     global turtle_direction
-    player.left(90)
+    t.left(90)
     turtle_direction -= 90
 
 
@@ -133,9 +122,23 @@ wn.onkeypress(right, "Right")
 wn.onkeypress(fire_bullet, "space")
 wn.onkeypress(rotate_clockwise, "r")
 wn.onkeypress(rotate_counter_clockwise, "l")
+"""
+for mom_using_the_wheelbarrow_outside in range(number_of_enemies):
+    enemies.append(nt())
 
+for enemy in enemies:
+    enemy = t.Turtle()
+    enemy.shape("turtle")
+    enemy.color("red")
+    enemy.pencolor("black")
+    enemy.penup()
+    enemy.speed(3)
+    ex = random.randint(-300, 300)
+    ey = random.randint(-150, 150)
+    enemy.setposition(ex, ey)
+"""
 
-# Anthony & Steve create a new loop.
+# Anthony creates a new loop.
 for index in range(number_of_enemies):
     enemies.append(t.Turtle())
     enemies[index].shape("turtle")
@@ -153,7 +156,6 @@ for index in range(number_of_enemies):
 
 
 enemy_go = True
-player_lives = 3
 
 
 def is_collision(t1, t2):
@@ -169,14 +171,13 @@ def play_sound(sound_file):
     winsound.PlaySound(sound_file, winsound.SND_ASYNC)
 
 
-while player_lives > 0:
+while enemy_go:
     global heading_set
-    global heading
     # print(f"x = {x} y = {y}")
     # Move the bullet
     if bulletstate == "fire":
         if heading_set:
-            heading = player.heading()
+            heading = t.heading()
             bullet.setheading(heading)
             heading_set = False
         bullet_heading = bullet.heading()
@@ -236,6 +237,6 @@ while player_lives > 0:
             enemy.forward(-enemy_distance)
         if is_collision(bullet, enemy):
             enemy.hideturtle()
-        if is_collision(enemy, player):
+        if is_collision(enemy, t):
             play_sound('EXPLODE.WAV')
-            player_lives -= 1
+            exit()

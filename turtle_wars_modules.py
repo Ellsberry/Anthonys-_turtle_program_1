@@ -46,7 +46,7 @@ enemy_number = ""
 number_of_enemies = 5   # int(turtle.textinput(enemy_number, "How many enemies do you want?   "))
 for index in range(number_of_enemies):
     enemy = t.Turtle()
-    enemy.speed(0)
+    enemy.speed(3)
     enemies.append(enemy)
     enemies[index].shape("turtle")
     if index == 0:
@@ -83,50 +83,6 @@ x_score = 0
 def play_sound(sound_file):
     winsound.PlaySound(sound_file, winsound.SND_ASYNC)
 
-
-# Event driven movements for Player
-def left():
-    px = player.xcor()
-    py = player.ycor()
-    px -= 20
-    if px < -600:
-        px = -600
-    player.goto(px, py)
-
-
-def right():
-    px = player.xcor()
-    py = player.ycor()
-    px += 20
-    if px > 600:
-        px = 600
-    player.goto(px, py)
-
-
-def up():
-    px = player.xcor()
-    py = player.ycor()
-    py += 20
-    if py > 300:
-        py = 300
-    player.goto(px, py)
-
-
-def down():
-    px = player.xcor()
-    py = player.ycor()
-    py -= 20
-    if py < -300:
-        py = -300
-    player.goto(px, py)
-
-
-def rotate_clockwise():
-    player.right(90)
-
-
-def rotate_counter_clockwise():
-    player.left(90)
 
 
 def is_collision(t1, t2):
