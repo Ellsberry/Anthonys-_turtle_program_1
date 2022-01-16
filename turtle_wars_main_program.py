@@ -36,9 +36,11 @@ def change_score(previous_score, amount):
 
 def play_sound(sound_file):
     if sound_file == "EXPLODE.WAV":
-        sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\EXPLODE.WAV"
+        # sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\EXPLODE.WAV"
+        sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\EXPLODE.WAV"
     else:
-        sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\LASER.WAV"
+        # sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\LASER.WAV"
+        sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\LASER.WAV"
     winsound.PlaySound(sound_path, winsound.SND_ASYNC)
 
 
@@ -52,8 +54,8 @@ def is_collision(t1, t2):
 
 
 # Create player
-anthony = AnthonysTurtleChildClass("player", int(5), 'white')
-
+anthony = AnthonysTurtleChildClass("player", int(5), 'cyan')
+# steve = AnthonysTurtleChildClass("player", int(5), 'white')
 
 
 # AND UN-COMMENT THE NUMBER OF ENEMIES INPUT LINE
@@ -64,17 +66,17 @@ def create_new_enemies(e_number, e_speed):
     enemies = []                                                         # this is for the list of enemies
     for index in range(e_number):
         if index == 0:
-            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'blue'))
+            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'red'))
         elif index == 1:
-            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'green'))
+            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'red'))
         elif index == 2:
-            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'yellow'))
+            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'red'))
         elif index == 3:
-            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'orange'))
+            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'red'))
         elif index == 4:
-            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'grey'))
+            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'red'))
         else:
-            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'violet'))
+            enemies.append(AnthonysTurtleChildClass('enemy', enemy_speed, 'blue'))
     return enemies, e_number, e_speed
 
 

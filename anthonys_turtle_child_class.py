@@ -94,7 +94,7 @@ class AnthonysTurtleChildClass(T):
         if self.active is True:
             return
         else:
-            laser_sound = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\LASER.WAV"
+            laser_sound = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\LASER.WAV"
             winsound.PlaySound(laser_sound, winsound.SND_ASYNC)
             self.active = True
             self.setposition(x_start, y_start)
@@ -124,14 +124,15 @@ class AnthonysTurtleChildClass(T):
             self.path = set()
             x_start = int(self.xcor())
             y_start = int(self.ycor())
+            jump_distance = 100
             if self.heading == 0:
-                self.setposition(int(self.xcor() + 60), int(self.ycor()))
+                self.setposition(int(self.xcor() + jump_distance), int(self.ycor()))
             if self.heading == 90:
-                self.setposition(int(self.xcor()), int(self.ycor() + 60))
+                self.setposition(int(self.xcor()), int(self.ycor() + jump_distance))
             if self.heading == 180:
-                self.setposition(int(self.xcor() - 60), int(self.ycor()))
+                self.setposition(int(self.xcor() - jump_distance), int(self.ycor()))
             if self.heading == 270:
-                self.setposition(int(self.xcor()), int(self.ycor() - 60))
+                self.setposition(int(self.xcor()), int(self.ycor() - jump_distance))
             x_end = int(self.xcor())
             y_end = int(self.ycor())
             self.path = path(x_start, y_start, x_end, y_end)
