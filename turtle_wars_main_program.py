@@ -105,7 +105,7 @@ wn.onkeypress(anthony.rt, "Right")
 wn.onkeypress(call_fire_bullet, "space")
 wn.onkeypress(anthony.rotate_clockwise, "r")
 wn.onkeypress(anthony.rotate_counter_clockwise, "l")
-
+# hi
 while anthony.lives > 0:
     if len(active_enemies) <= 0:
         active_enemies, number_of_enemies, enemy_speed = create_new_enemies(number_of_enemies, enemy_speed)
