@@ -89,7 +89,7 @@ class AnthonysTurtleChildClass(T):
         if self.ycor() < -300:
             self.setposition(int(self.xcor()), -300)
 
-    def fire_bullet(self,x_start, y_start, b_heading):
+    def fire_bullet(self, x_start, y_start, b_heading):
         c_heading = int(b_heading)
         if self.active is True:
             return

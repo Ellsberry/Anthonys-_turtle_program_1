@@ -23,24 +23,13 @@ score_pen.write(score_string, False, align="left", font=("Arial", 14, "normal"))
 score_pen.hideturtle()
 
 
-def change_score(previous_score, amount):
-    """previous score is the score before the new amount is added"""
-    new_score = previous_score + amount
-    score_pen.clear()
-    score_pen.setposition(-290, 280)
-    new_score_string = "Score: {}".format(new_score)
-    score_pen.write(new_score_string, False, align="left", font=("Arial", 14, "normal"))
-    score_pen.hideturtle()
-    return new_score
-
-
 def play_sound(sound_file):
     if sound_file == "EXPLODE.WAV":
-        sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\EXPLODE.WAV"
-        # sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\EXPLODE.WAV"
+        # sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\EXPLODE.WAV"
+        sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\EXPLODE.WAV"
     else:
-        sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\LASER.WAV"
-        # sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\LASER.WAV"
+        # sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\LASER.WAV"
+        sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\LASER.WAV"
     winsound.PlaySound(sound_path, winsound.SND_ASYNC)
 
 
@@ -55,10 +44,26 @@ def is_collision(t1, t2):
 
 # Create player
 anthony = AnthonysTurtleChildClass("player", int(5), 'cyan')
-# steve = AnthonysTurtleChildClass("player", int(5), 'white')
+# steve = Anthony'sTurtleChildClass("player", int(5), 'white')
+anthony.lives = int(t.textinput("number of player lives", "lives"))
+print(anthony.lives)
+player_name = t.textinput("player name", "player")
+print(player_name)
+
+
+def change_score(previous_score, amount, lives, name):
+    """previous score is the score before the new amount is added"""
+    new_score = previous_score + amount
+    score_pen.clear()
+    score_pen.setposition(-290, 280)
+    new_score_string = f"Score: {new_score}  |  player name: {name}  |  remaining lives: {lives}"
+    score_pen.write(new_score_string, False, align="left", font=("Arial", 14, "normal"))
+    score_pen.hideturtle()
+    return new_score
 
 
 # AND UN-COMMENT THE NUMBER OF ENEMIES INPUT LINE
+
 
 def create_new_enemies(e_number, e_speed):
     e_number += 1
@@ -105,9 +110,10 @@ wn.onkeypress(anthony.rt, "Right")
 wn.onkeypress(call_fire_bullet, "space")
 wn.onkeypress(anthony.rotate_clockwise, "r")
 wn.onkeypress(anthony.rotate_counter_clockwise, "l")
-# hi
+
 while anthony.lives > 0:
     if len(active_enemies) <= 0:
+        anthony.lives += 1
         active_enemies, number_of_enemies, enemy_speed = create_new_enemies(number_of_enemies, enemy_speed)
     for enemy in active_enemies:
         x_start = int(enemy.xcor())
@@ -128,9 +134,7 @@ while anthony.lives > 0:
                 enemy.hideturtle()
                 active_enemies.remove(enemy)
                 play_sound('EXPLODE.WAV')
-                score = change_score(score, enemy.points)
-
-
+                score = change_score(score, enemy.points, anthony.lives, player_name)
     # enemy.move_enemy()
     if bullet.active is True:
         bullet.move_bullet()
