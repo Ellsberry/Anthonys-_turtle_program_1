@@ -15,7 +15,7 @@ class AnthonysTurtleChildClass(T):
             self.setposition(-200, -200)
             self.speed(speed)
             self.color(color)
-            self.lives = 50                      # the player starts with 3 lives
+            self.lives = 3                      # the player starts with 3 lives
             self.penup()
         elif o_type == 'enemy':                    # Build enemy objects
             self.shape("turtle")
@@ -33,7 +33,7 @@ class AnthonysTurtleChildClass(T):
             self.speed(speed)
             self.color(color)
             self.active = False
-            self.heading = 0
+            # self.heading = 0
             self.path = set()
             self.penup()
             self.clear()
@@ -89,7 +89,7 @@ class AnthonysTurtleChildClass(T):
         if self.ycor() < -300:
             self.setposition(int(self.xcor()), -300)
 
-    def fire_bullet(self, x_start, y_start, b_heading):
+    def fire_bullet(self,x_start, y_start, b_heading):
         c_heading = int(b_heading)
         if self.active is True:
             return
@@ -99,16 +99,17 @@ class AnthonysTurtleChildClass(T):
             self.active = True
             self.setposition(x_start, y_start)
             self.path = set()
-            self.heading = c_heading
+            self.setheading(b_heading)
             self.showturtle()
+            jump_distance = 400
             if c_heading == 0:
-                self.setposition(int(x_start + 60), int(y_start))
+                self.setposition(int(x_start + jump_distance), int(y_start))
             if c_heading == 90:
-                self.setposition(int(x_start), int(y_start + 60))
+                self.setposition(int(x_start), int(y_start + jump_distance))
             if c_heading == 180:
-                self.setposition(int(x_start - 60), int(y_start))
+                self.setposition(int(x_start - jump_distance), int(y_start))
             if c_heading == 270:
-                self.setposition(int(x_start), int(y_start) - 60)
+                self.setposition(int(x_start), int(y_start) - jump_distance)
             x_end = int(self.xcor())
             y_end = int(self.ycor())
             self.showturtle()
@@ -125,18 +126,19 @@ class AnthonysTurtleChildClass(T):
             x_start = int(self.xcor())
             y_start = int(self.ycor())
             jump_distance = 100
-            if self.heading == 0:
+            bullet_heading = int(self.heading())
+            if bullet_heading == 0:
                 self.setposition(int(self.xcor() + jump_distance), int(self.ycor()))
-            if self.heading == 90:
+            if bullet_heading == 90:
                 self.setposition(int(self.xcor()), int(self.ycor() + jump_distance))
-            if self.heading == 180:
+            if bullet_heading == 180:
                 self.setposition(int(self.xcor() - jump_distance), int(self.ycor()))
-            if self.heading == 270:
+            if bullet_heading == 270:
                 self.setposition(int(self.xcor()), int(self.ycor() - jump_distance))
             x_end = int(self.xcor())
             y_end = int(self.ycor())
             self.path = path(x_start, y_start, x_end, y_end)
-            if x_end > 600 or x_end < -600 or y_end > 300 or y_end < -300:
+            if x_end >= 600 or x_end <= -600 or y_end >= 300 or y_end <= -300:
                 self.active = False
                 self.hideturtle()
                 return
