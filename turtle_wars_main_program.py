@@ -34,7 +34,6 @@ def change_score(previous_score, amount):
     score_pen.hideturtle()
     return new_score
 
-
 def play_sound(sound_file):
     if sound_file == "EXPLODE.WAV":
         sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\EXPLODE.WAV"
