@@ -1,3 +1,4 @@
+import time
 from turtle import Screen
 import turtle as t
 from anthonys_turtle_child_class import AnthonysTurtleChildClass
@@ -9,7 +10,7 @@ import sys
 # Setup Screen as wn (short for window)
 wn = Screen()
 wn.bgcolor("black")
-wn.title("Turtle Wars")
+wn.title("Anthony's Turtle Wars")
 
 # Display a score box and set the score to zero
 score = 0
@@ -19,7 +20,7 @@ score_pen.color('White')
 score_pen.penup()
 score_pen.setposition(-290, 280)
 score_string = "Score: {}".format(score)
-score_pen.write(score_string, False, align="left", font=("Arial", 14, "normal"))
+# score_pen.write(score_string, False, align="left", font=("Arial", 14, "normal"))
 score_pen.hideturtle()
 
 
@@ -28,8 +29,8 @@ def change_score(previous_score, amount):
     new_score = previous_score + amount
     score_pen.clear()
     score_pen.setposition(-290, 280)
-    new_score_string = "Score: {}".format(new_score)
-    score_pen.write(new_score_string, False, align="left", font=("Arial", 14, "normal"))
+    # new_score_string = "Score: {}".format(new_score)
+    # score_pen.write(new_score_string, False, align="left", font=("Arial", 14, "normal"))
     score_pen.hideturtle()
     return new_score
 
@@ -54,8 +55,10 @@ def is_collision(t1, t2):
 
 
 # Create player
+
 anthony = AnthonysTurtleChildClass("player", int(5), 'cyan')
-# steve = AnthonysTurtleChildClass("player", int(5), 'white')
+players_name = t.textinput(wn,"Hi Who is going to play the game")
+anthony.lives = int(t.textinput(wn, "How many player lives do you want to start with?"))
 
 
 # AND UN-COMMENT THE NUMBER OF ENEMIES INPUT LINE
@@ -81,10 +84,8 @@ def create_new_enemies(e_number, e_speed):
 
 
 # Create a list of enemies
-# number_of_enemies = int(input("How many enemies do you want?"))
-number_of_enemies = 4  # REMOVE THIS LINE AFTER TESTING
+number_of_enemies = int(t.textinput(wn,"How many enemies do you want at the start?"))
 enemy_speed = 5
-
 active_enemies, number_of_enemies, enemy_speed = create_new_enemies(number_of_enemies, enemy_speed)
 
 # Create bullet
@@ -110,6 +111,14 @@ while anthony.lives > 0:
     if len(active_enemies) <= 0:
         active_enemies, number_of_enemies, enemy_speed = create_new_enemies(number_of_enemies, enemy_speed)
     for enemy in active_enemies:
+        score_pen.speed(0)
+        score_pen.clear()
+        score_pen.color('White')
+        score_pen.penup()
+        score_pen.setposition(-290, 280)
+        score_string = f"{players_name} has {anthony.lives} lives left and Score: {score}"
+        score_pen.write(score_string, False, align="left", font=("Arial", 14, "normal"))
+        score_pen.hideturtle()
         x_start = int(enemy.xcor())
         y_start = int(enemy.ycor())
         enemy.move_enemy()
@@ -120,7 +129,13 @@ while anthony.lives > 0:
             play_sound('EXPLODE.WAV')
             anthony.lives -= 1
             if anthony.lives <= 0:
-                sys.exit()
+                play_again = t.textinput(wn,'Do you want to continue to play (y or n)?')
+                if play_again == 'n':
+                    time.sleep(5)
+                    sys.exit()
+                else:
+                    anthony.lives = int(t.textinput(wn, "How many lives do you want?"))
+                    wn.listen()
             continue
         # Determine if a bullet is active and see if the path of the bullet and the enemy intersect
         if bullet.active:
