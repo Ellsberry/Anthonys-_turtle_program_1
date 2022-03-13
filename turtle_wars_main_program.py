@@ -34,13 +34,14 @@ def change_score(previous_score, amount):
     score_pen.hideturtle()
     return new_score
 
+
 def play_sound(sound_file):
     if sound_file == "EXPLODE.WAV":
-        sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\EXPLODE.WAV"
-        # sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\EXPLODE.WAV"
+        # sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\EXPLODE.WAV"
+        sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\EXPLODE.WAV"
     else:
-        sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\LASER.WAV"
-        # sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\LASER.WAV"
+        # sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\LASER.WAV"
+        sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\LASER.WAV"
     winsound.PlaySound(sound_path, winsound.SND_ASYNC)
 
 
@@ -56,11 +57,14 @@ def is_collision(t1, t2):
 # Create player
 
 anthony = AnthonysTurtleChildClass("player", int(5), 'cyan')
-players_name = t.textinput(wn,"Hi Who is going to play the game")
-anthony.lives = int(t.textinput(wn, "How many player lives do you want to start with?"))
-
+players_name = t.textinput(wn, "Hi Who is going to play the game")
+try:
+    anthony.lives = int(t.textinput(wn, "How many player lives do you want to start with?"))
+except:
+    anthony.lives = 3
 
 # AND UN-COMMENT THE NUMBER OF ENEMIES INPUT LINE
+
 
 def create_new_enemies(e_number, e_speed):
     e_number += 1
@@ -83,9 +87,12 @@ def create_new_enemies(e_number, e_speed):
 
 
 # Create a list of enemies
-number_of_enemies = int(t.textinput(wn,"How many enemies do you want at the start?"))
+try:
+    number_of_enemies = int(t.textinput(wn, "How many enemies do you want at the start?"))
+except:
+    number_of_enemies = 5
 enemy_speed = 5
-active_enemies, number_of_enemies, enemy_speed = create_new_enemies(number_of_enemies, enemy_speed)
+active_enemies, number_of_enemies, enemy_speed = create_new_enemies(number_of_enemies-1, enemy_speed)
 
 # Create bullet
 bullet = AnthonysTurtleChildClass('bullet', 10, 'yellow')
@@ -105,7 +112,7 @@ wn.onkeypress(anthony.rt, "Right")
 wn.onkeypress(call_fire_bullet, "space")
 wn.onkeypress(anthony.rotate_clockwise, "r")
 wn.onkeypress(anthony.rotate_counter_clockwise, "l")
-# hi
+
 while anthony.lives > 0:
     if len(active_enemies) <= 0:
         active_enemies, number_of_enemies, enemy_speed = create_new_enemies(number_of_enemies, enemy_speed)
@@ -128,12 +135,15 @@ while anthony.lives > 0:
             play_sound('EXPLODE.WAV')
             anthony.lives -= 1
             if anthony.lives <= 0:
-                play_again = t.textinput(wn,'Do you want to continue to play (y or n)?')
+                play_again = t.textinput(wn, 'Do you want to continue to play (y or n)?')
                 if play_again == 'n':
                     time.sleep(5)
                     sys.exit()
                 else:
-                    anthony.lives = int(t.textinput(wn, "How many lives do you want?"))
+                    try:
+                        anthony.lives = int(t.textinput(wn, "How many lives do you want?"))
+                    except:
+                        anthony.lives = 3
                     wn.listen()
             continue
         # Determine if a bullet is active and see if the path of the bullet and the enemy intersect
@@ -143,7 +153,6 @@ while anthony.lives > 0:
                 active_enemies.remove(enemy)
                 play_sound('EXPLODE.WAV')
                 score = change_score(score, enemy.points)
-
 
     # enemy.move_enemy()
     if bullet.active is True:

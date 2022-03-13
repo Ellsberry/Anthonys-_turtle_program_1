@@ -86,6 +86,7 @@ def path(x1, y1, x2, y2):
         e_path = set()
         return e_path
 
+
 if __name__ == '__main__':
     # the __main__ code is for testing purposes
     x_start = -20
