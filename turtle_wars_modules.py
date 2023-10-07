@@ -10,6 +10,8 @@ import random
 import math
 import winsound
 from path import path
+import time
+import anthonys_turtle_child_class
 
 # Setup Screen set score to zero
 # set up screen use wn (short for window) for screen
@@ -36,6 +38,9 @@ player.speed(0)
 player.penup()
 player_lives = ""
 number_of_player_lives = 3   # int(turtle.textinput(player_lives, "How many player lives do you want?   "))
+
+# pause for 20 seconds
+time.sleep(20)
 
 # Build enemy objects
 # number_of_enemies = int(input("How many enemies do you want?")
