@@ -81,17 +81,18 @@ while running and shape_index < len(shapes):
     if current_shape[0] == "rectangle":
         width = int(current_shape[1])
         height = int(current_shape[2])
-        print(f"width = {width}  and height = {height}")
-        pygame.draw.rect(window, BLACK, pygame.Rect(400 - (width / 2), 400 - (height / 2), width, height), 2)
+        # print(f"width = {width}  and height = {height}")
+        pygame.draw.rect(window, BLACK, (400 - (width / 2 * SCALE_FACTOR), 400 - (height / 2 * SCALE_FACTOR),
+                                         width * SCALE_FACTOR, height * SCALE_FACTOR), 2)
         area = width * height
     elif current_shape[0] == "circle":
-        radius = random.randint(3, 9)
-        print(f"radius = {radius}  and radius squared = {radius ** 2}")
+        radius = int(current_shape[3])
+        # print(f"radius = {radius}  and radius squared = {radius ** 2}")
         area = 3.14 * (radius ** 2)
         pygame.draw.circle(window, BLACK, (400, 400), radius * SCALE_FACTOR, 2)
     elif current_shape[0] == "triangle":
         base, height = int(current_shape[1]), int(current_shape[2])
-        print(f'base = {base}  and height = {height}')
+        # print(f'base = {base}  and height = {height}')
         area = (1/2) * base * height
         points = [
             (400 - (base / 2 * SCALE_FACTOR), 400),
@@ -106,10 +107,9 @@ while running and shape_index < len(shapes):
     player_input = input(f"Enter the area of the {current_shape[0]}: ")
 
     try:
-        player_area = int(player_input)
+        player_area = float(player_input)
 
-
-        if abs(player_area - area) < 1:
+        if abs(player_area - area) <= 1:
             print("Correct!")
         else:
             print(f"Sorry, the correct area is {area:.2f}")
