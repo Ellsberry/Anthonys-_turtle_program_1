@@ -1,35 +1,52 @@
 import turtle
-
+from turtle import Screen
+import time
 # Create a Blue Turtle screen
-
-
-
+wn = Screen()
+wn.bgcolor('blue')
+wn.title("Blue Turtle Screen")
+wn.setup(1000, 1000)
 
 
 # create a list of 4 turtles with different colors
 turtles = []
 colors = ["red", "green", "yellow", "purple"]
-
-
-
-
-
-
-
+for i in range(len(colors)):
+    turtles.append(turtle.Turtle())
+    turtles[i].shape('turtle')
+    turtles[i].color(colors[i])
+    turtles[i].penup()
+    turtles[i].goto(-500, 300 - i * 200)
+    turtles[i].showturtle()
 
 # show screen with turtles
-screen.update()
+wn.update()
 
 # functions to allow a selection of time of 1, 2, 3, or 4 hours
 
 
 def hour1():
+    hours = 1
+    race(hours)
 
 
+def hour2():
+    hours = 2
+    race(hours)
+
+
+def hour3():
+    hours = 3
+    race(hours)
+
+
+def hour4():
+    hours = 4
+    race(hours)
 
 
 def hour_x():
-
+    turtle.bye()
 
 
 def race(hours):
@@ -43,20 +60,20 @@ def race(hours):
     for i in range(race_time):
         x = i / 10
         turtles[0].goto(-500 + x ** 4 * 10, 300)
-        turtles[1].goto(-500 + 1 * x ** 3 * 10, 100)
-        turtles[2].goto(-500 + 2 * x ** 2 * 10, -100)
+        turtles[1].goto(-500 + 2 * x ** 3 * 10, 100)
+        turtles[2].goto(-500 + 3 * x ** 2 * 10, -100)
         turtles[3].goto(-500 + 4 * x * 10, -300)
-        screen.update()
+        wn.update()
 
 
 # The remainder of the program is event driven based on keyboard inputs
-screen.listen()
+wn.listen()
 
-screen.onkeypress(hour1, "1")
-screen.onkeypress(hour2, "2")
-screen.onkeypress(hour3, "3")
-screen.onkeypress(hour4, "4")
-screen.onkeypress(hour_x, "x")
+wn.onkeypress(hour1, "1")
+wn.onkeypress(hour2, "2")
+wn.onkeypress(hour3, "3")
+wn.onkeypress(hour4, "4")
+wn.onkeypress(hour_x, "x")
 
 while True:
-    screen.update()
+    wn.update()
