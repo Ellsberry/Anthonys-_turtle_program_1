@@ -93,27 +93,27 @@ while running and shape_index < len(shapes):
         area = 3.14 * (radius ** 2)
         pygame.draw.circle(window, BLACK, (400, 400), radius * SCALE_FACTOR, 2)
     elif current_shape[0] == "sine wave":
-        frequency = 2
-        amplitude = 80
-        offset_y = 400
-        num_points = WIDTH
-        for i in range(num_points):
-            x = i / num_points * 2 * math.pi
-            y1 = (amplitude * math.sin(x * frequency)) + offset_y / 3
-            y2 = (amplitude / 2 * math.sin(x * frequency * 2)) + offset_y / 3
-            y3 = (amplitude / 4 * math.sin(x * frequency * 4)) + offset_y / 3
-            y = y1 + y2 + y3
-            print(f"x = {x}     y = {y - offset_y}")
-            if i > 0:
-                pygame.draw.aaline(window, (0, 0, 0), prev_pt, (i, y))
-            prev_pt = i, y
+        # frequency = 2
+        # amplitude = 80
+        # offset_y = 400
+        # num_points = WIDTH
+        # for i in range(num_points):
+        #     x = i / num_points * 2 * math.pi
+        #     y1 = (amplitude * math.sin(x * frequency)) + offset_y / 3
+        #     y2 = (amplitude / 2 * math.sin(x * frequency * 2)) + offset_y / 3
+        #     y3 = (amplitude / 4 * math.sin(x * frequency * 4)) + offset_y / 3
+        #     y = y1 + y2 + y3
+        #     print(f"x = {x}     y = {y - offset_y}")
+        #     if i > 0:
+        #         pygame.draw.aaline(window, (0, 0, 0), prev_pt, (i, y))
+        #     prev_pt = i, y
         # frequency = 2
         # amplitude = 40
         # offset_y = 400
         # num_points = WIDTH
         # for i in range(num_points):
         #     x = i / num_points * 2 * math.pi
-        #     y = (amplitude * math.sin(x * frequency)) + offset_y
+        #     y = (amplitude * math.sin(x * frequency * 2)) + offset_y * 1.5
         #     print(f"x = {x}     y = {y - offset_y}")
         #     if i > 0:
         #         pygame.draw.aaline(window, (0, 0, 0), prev_pt, (i, y))
@@ -124,13 +124,13 @@ while running and shape_index < len(shapes):
         num_points = WIDTH
         for i in range(num_points):
             x = i / num_points * 2 * math.pi
-            y1 = (amplitude * math.sin(x * frequency)) + offset_y / 6
-            y2 = (amplitude / 2 * math.sin(x * frequency * 2)) + offset_y / 6
+            y1 = (amplitude * math.sin(x * frequency)) + offset_y / 2
+            y2 = (amplitude * math.sin(x * frequency * 2)) + offset_y / 2
             y3 = (amplitude / 4 * math.sin(x * frequency * 4)) + offset_y / 6
             y4 = (amplitude * math.cos(x * frequency)) + offset_y / 6
             y5 = (amplitude / 2 * math.cos(x * frequency * 2)) + offset_y / 6
             y6 = (amplitude / 4 * math.cos(x * frequency * 4)) + offset_y / 6
-            y = y1 + y2 + y3 + y4 + y5 + y6
+            y = y1 + y2
             print(f"x = {x}     y = {y - offset_y}")
             if i > 0:
                 pygame.draw.aaline(window, (0, 0, 0), prev_pt, (i, y))
