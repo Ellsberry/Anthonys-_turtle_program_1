@@ -58,7 +58,9 @@ def synth(frequency, duration=1000.0, sampling_rate=44100, volume=.5):
     return sound
 
 
-# play a c major cord
+# play some notes by naming the note and giving it a duration
+
+
 tones = ['C4', 'C4', 'F4', 'F4', 'B4', 'A4']
 amplitude = .5
 for note in tones:
