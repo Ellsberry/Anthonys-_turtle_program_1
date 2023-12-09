@@ -105,4 +105,25 @@ pygame.draw.polygon(window, BLACK, points, 2)
 
 pygame.display.flip()
 
-time.sleep(50)
+
+# calculate the angles  of the 3, 4, 5 triangle using the sine and cosine functions
+a = 3
+b = 4
+c = 5
+angle_A = math.degrees(math.asin(a / c))
+angle_B = math.degrees(math.asin(b / c))
+angle_C = 180 - angle_A - angle_B
+print(f'the angles for a 3 4 5 triangle are:  angle_A = {angle_A}  angle_B = {angle_B}  angle_C = {angle_C}')
+
+# calculate the angles  of the 6, 8, 10 triangle using the sine and cosine functions
+a = 6
+b = 8
+c = 10
+angle_A = math.degrees(math.asin(a / c))
+angle_B = math.degrees(math.asin(b / c))
+angle_C = 180 - angle_A - angle_B
+print(f'the angles for a 6 8 10  triangle are:  angle_A = {angle_A}  angle_B = {angle_B}  angle_C = {angle_C}')
+
+
+
+time.sleep(100)
