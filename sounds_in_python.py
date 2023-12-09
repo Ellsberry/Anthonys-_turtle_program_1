@@ -59,7 +59,9 @@ def synth(frequency, duration=1000.0, sampling_rate=44100, volume=.5):
 
 
 # play some notes by naming the note and giving it a duration
-
+synth(midi_notes_dictionary['C4'][1], 1000)
+synth(midi_notes_dictionary['D4'][1], 1000)
+synth(midi_notes_dictionary['E4'][1], 1000)
 
 tones = ['C4', 'C4', 'F4', 'F4', 'B4', 'A4']
 amplitude = .5

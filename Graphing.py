@@ -1,6 +1,7 @@
 import pygame
 import random
 import math
+import time
 
 # Initialize Pygame
 pygame.init()
@@ -13,7 +14,7 @@ FONT = pygame.font.Font(None, 36)  # Font for axis labels
 
 # Create a window
 window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Area Calculation Game")
+pygame.display.set_caption("Triangles")
 
 # Scale factor for positioning and scaling shapes
 SCALE_FACTOR = 40
@@ -26,27 +27,50 @@ def scale_x(x):
 def scale_y(y):
     return HEIGHT / 2 - y * SCALE_FACTOR
 
+window.fill(WHITE)
 
-# Define 5 shapes (rectangles, circles, and triangles)
+    # Draw the x and y axes
+    pygame.draw.line(window, BLACK, (0, HEIGHT / 2), (WIDTH, HEIGHT / 2), 2)
+    pygame.draw.line(window, BLACK, (WIDTH / 2, 0), (WIDTH / 2, HEIGHT), 2)
+
+    # Add numbers to the x and y axes
+    for x in range(-10, 10):
+        text = FONT.render(str(x), True, BLACK)
+        text_rect = text.get_rect()
+        text_rect.centerx = scale_x(x)
+        text_rect.centery = HEIGHT // 2
+        window.blit(text, text_rect)
+
+    for y in range(-10, 10):
+        text = FONT.render(str(y), True, BLACK)
+        text_rect = text.get_rect()
+        text_rect.centerx = WIDTH // 2
+        text_rect.centery = scale_y(y)
+        window.blit(text, text_rect)
+
 shapes = []
+# Define 5 triangles 4 congruent and 1 similar
+base, height = 4, 5
+points = [
+    (400 - (base * SCALE_FACTOR), 400),
+    (400, 400),
+    (400, 400 - height * SCALE_FACTOR)
+]
+pygame.draw.polygon(window, WHITE, points, 2)
+pygame.display.flip()
+
+time.sleep(5)
+
+"""
+
+
 while len(shapes) < 5:
-    shape_type = random.choice(["rectangle", "circle", "triangle"])
-
-    if shape_type == "rectangle":
-        width = random.randint(2, 8)
-        height = random.randint(2, 8)
-        shapes.append(("rectangle", width, height))
-    elif shape_type == "circle":
-        radius = random.randint(2, 4)
-        shapes.append(("circle", 0, 0, radius))
-    else:
-        # For triangles
-        base = random.randint(2, 8)
-        height = random.randint(2, 8)
-        shapes.append(("triangle", base, height))
+    # For triangles
+    base = random.randint(2, 8)
+    height = random.randint(2, 8)
+    shapes.append(("triangle", base, height))
 
 shapes = []
-shapes.append(("sine wave", 0, 0))
 
 # Game loop
 running = True
@@ -165,3 +189,4 @@ while running and shape_index < len(shapes):
 
 # Clean up
 pygame.quit()
+"""
