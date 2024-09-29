@@ -38,10 +38,10 @@ def change_score(previous_score, amount):
 def play_sound(sound_file):
     if sound_file == "EXPLODE.WAV":
         # sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\EXPLODE.WAV"
-        sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\EXPLODE.WAV"
+        sound_path = r"C:\Users\ajh08_idy4tts\OneDrive\Documents\Anthonys-_turtle_program_1\EXPLODE.WAV"
     else:
         # sound_path = r"C:\Users\Steve Ellsberry\PycharmProjects\Anthonys-_turtle_program_1\LASER.WAV"
-        sound_path = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\LASER.WAV"
+        sound_path = r"C:\Users\ajh08_idy4tts\OneDrive\Documents\Anthonys-_turtle_program_1\LASER.WAV"
     winsound.PlaySound(sound_path, winsound.SND_ASYNC)
 
 

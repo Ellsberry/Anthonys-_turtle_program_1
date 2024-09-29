@@ -94,7 +94,7 @@ class AnthonysTurtleChildClass(T):
         if self.active is True:
             return
         else:
-            laser_sound = r"C:\Users\ajh08_idy4tts\Documents\Anthonys-_turtle_program_1\LASER.WAV"
+            laser_sound = r"C:\Users\ajh08_idy4tts\OneDrive\Documents\Anthonys-_turtle_program_1\LASER.WAV"
             winsound.PlaySound(laser_sound, winsound.SND_ASYNC)
             self.active = True
             self.setposition(x_start, y_start)

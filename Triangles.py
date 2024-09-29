@@ -126,4 +126,4 @@ print(f'the angles for a 6 8 10  triangle are:  angle_A = {angle_A}  angle_B = {
 
 
 
-time.sleep(100)
+time.sleep(9999)
